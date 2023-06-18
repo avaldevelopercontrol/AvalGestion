@@ -121,15 +121,32 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="av_clienteSRV?accion=listarClientes" class="nav-link">
-                                            <i class="far fa-building nav-icon""></i>
+                                        <a href="av_clienteSRV?action=listclients" class="nav-link">
+                                            <i class="far fa-building nav-icon"></i>
                                             <p>Clientes</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="gd_usuarioclienteSRV?accion=listarUsuarioClientes" class="nav-link">
+                                        <a href="gd_usuarioclienteSRV?action=listUserClients" class="nav-link">
                                             <i class="far fa-id-badge nav-icon"></i>
                                             <p>Usuario - Clientes</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item menu">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-paste"></i>
+                                    <p>
+                                        Gestión
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="gd_gestioncarteraSRV?accion=presentarGestionCartera" class="nav-link">
+                                            <i class="far fa-calendar nav-icon"></i>
+                                            <p>Llamadas</p>
                                         </a>
                                     </li>
                                 </ul>

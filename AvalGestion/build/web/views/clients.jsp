@@ -143,7 +143,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="gd_usuarioclienteSRV?accion=listarUsuarioClientes" class="nav-link">
+                                        <a href="gd_usuarioclienteSRV?action=listUserClients" class="nav-link">
                                             <i class="far fa-id-badge nav-icon"></i>
                                             <p>Usuario - Clientes</p>
                                         </a>
