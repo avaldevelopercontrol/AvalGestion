@@ -248,13 +248,13 @@
                                                         <c:choose>
                                                             <c:when test="${usuario.activo == true}">
                                                                 <input type="hidden" id="idUsuario" value="${usuario.idUsuario}">
-                                                                <a id="desactivarUsuario" href="gd_usuarioSRV?change=disabled&idUsuario=${usuario.idUsuario}" class="btn btn-danger btn-xs"  data-toggle="tooltip" title="Desactivar" data-original-title="Desactivar">
+                                                                <a id="desactivarUsuario" href="gd_usuarioSRV?action=disabled&idUsuario=${usuario.idUsuario}" class="btn btn-danger btn-xs"  data-toggle="tooltip" title="Desactivar" data-original-title="Desactivar">
                                                                     <i class="far fa-trash nav-icon"></i></a>
                                                             </c:when>
                                                             <c:otherwise>
                                                             <input type="hidden" id="idUsuario" value="${usuario.idUsuario}">
-                                                            <a id="activarUsuario" href="apr_usuarioSRV?change=enabled&idUsuario=${usuario.idUsuario}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Activar" data-original-title="Activar">
-                                                                <i class="glyphicon glyphicon-eye-open"></i></a>
+                                                            <a id="activarUsuario" href="gd_usuarioSRV?action=enabled&idUsuario=${usuario.idUsuario}" class="btn btn-success btn-xs" data-toggle="tooltip" title="Activar" data-original-title="Activar">
+                                                                <i class="far fa-eye nav-icon"></i></a>
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </td>

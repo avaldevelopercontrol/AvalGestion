@@ -16,6 +16,10 @@
         <servlet-name>gd_usuarioSRV</servlet-name>
         <servlet-class>Controller.gd_usuarioSRV</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>av_clienteSRV</servlet-name>
+        <servlet-class>Controller.av_clienteSRV</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>gd_usuarioSRV</servlet-name>
         <url-pattern>/gd_usuarioSRV</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>av_clienteSRV</servlet-name>
+        <url-pattern>/av_clienteSRV</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -141,4 +141,20 @@ public class gd_usuarioDAO {
         callableStatement.close();
     }
     
+    public void UsuarioActivoInactivo(gd_usuario usu) throws Exception{
+        String strSQL;
+        
+        CallableStatement callableStatement = null;
+        
+        strSQL = "{call sp_UsuarioActivoInactivo (?,?,?)}";
+        callableStatement = con.prepareCall(strSQL);
+        
+        callableStatement.setInt(1, usu.getIdUsuario());
+        callableStatement.setBoolean(2, usu.isActivo());
+        callableStatement.setString(3, usu.getUsuarioCrea());
+        
+        callableStatement.executeUpdate();
+        callableStatement.close();
+    }
+    
 }

@@ -43,7 +43,11 @@ public class gd_usuarioSRV extends HttpServlet {
                     getuser(request, response);
                 } else if (action.equals("updateuser")) {
                     updateuser(request, response);
-                } 
+                } else if (action.equals("disabled")) {
+                    disabled(request, response);
+                } else if (action.equals("enabled")) {
+                    enabled(request, response);
+                }
             }
         } finally {            
             out.close();
@@ -267,6 +271,72 @@ public class gd_usuarioSRV extends HttpServlet {
                 request.setAttribute("gd_usuario", usus);
             }
         }
+    }
+    
+    private void disabled(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (request.getSession().getAttribute("gd_usuarioSession") == null) {
+            this.getServletConfig().getServletContext()
+                    .getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
+        gd_usuarioDAO dao;
+        gd_usuario usu;
+        gd_usuario usuSession;
+        
+        Connection con = null;
+        con = Conection.getConexion();
+        dao = new gd_usuarioDAO(con);
+        
+        usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
+            
+        try {
+            dao = new gd_usuarioDAO(con);
+            usu = new gd_usuario();
+            if (request.getParameter("idUsuario") != null) {
+                usu.setIdUsuario(Integer.parseInt(request.getParameter("idUsuario")));
+                usu.setActivo(false);
+                usu.setUsuarioCrea(usuSession.getNombreUsuario());
+                dao.UsuarioActivoInactivo(usu);
+            } else {
+                request.setAttribute("msje", "No se obtuvo el Id del Usuario");
+            }
+        } catch (Exception e) {
+            request.setAttribute("msje", e.getMessage());
+        }
+        this.listusers(request, response);
+    }
+    
+    private void enabled(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (request.getSession().getAttribute("gd_usuarioSession") == null) {
+            this.getServletConfig().getServletContext()
+                    .getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
+        gd_usuarioDAO dao;
+        gd_usuario usu;
+        gd_usuario usuSession;
+        
+        Connection con = null;
+        con = Conection.getConexion();
+        dao = new gd_usuarioDAO(con);
+        
+        usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
+            
+        try {
+            dao = new gd_usuarioDAO(con);
+            usu = new gd_usuario();
+            if (request.getParameter("idUsuario") != null) {
+                usu.setIdUsuario(Integer.parseInt(request.getParameter("idUsuario")));
+                usu.setActivo(true);
+                usu.setUsuarioCrea(usuSession.getNombreUsuario());
+                dao.UsuarioActivoInactivo(usu);
+            } else {
+                request.setAttribute("msje", "No se obtuvo el Id del Usuario");
+            }
+        } catch (Exception e) {
+            request.setAttribute("msje", e.getMessage());
+        }
+        this.listusers(request, response);
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
