@@ -78,7 +78,7 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-right">
-                                            <form action="gd_usuarioSRV?action=singoff" method="POST">
+                                            <form action="gd_usuarioSRV?action=signoff" method="POST">
                                                 <input type="submit" name="singoff" value="Cerrar Session" class="btn btn-primary btn-block"/>
                                             </form>
                                         </div>
@@ -124,7 +124,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="gd_usuarioSRV?accion=listarUsuarios" class="nav-link">
+                                        <a href="gd_usuarioSRV?action=listusers" class="nav-link">
                                             <i class="far fa-user nav-icon"></i>
                                             <p>Usuarios</p>
                                         </a>
@@ -198,7 +198,7 @@
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
-                <strong>Derechos de autor &copy; 2022 <a href="https://adminlte.io">Aval.com</a>.</strong>
+                <strong>Derechos de autor &copy; 2023 <a href="https://avalperu.com/">Aval Perú</a>.</strong>
                 Reservados todos los derechos.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 1.1.0
@@ -251,6 +251,6 @@
 <%
     } else {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.sendRedirect("identificar.jsp");
+        response.sendRedirect("login.jsp");
     }
 %>
