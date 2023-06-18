@@ -123,7 +123,7 @@
                             with font-awesome or any other icon font library -->
                             <li class="nav-item menu-open">
                                 <a href="#" class="nav-link active">
-                                    <i class="nav-icon fas fa-box"></i>
+                                    <i class="nav-icon fas fa-edit"></i>
                                     <p>
                                         Mantenimiento
                                         <i class="right fas fa-angle-left"></i>
@@ -237,7 +237,7 @@
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
-                <strong>Derechos de autor &copy; 2022 <a href="https://adminlte.io">Aval.com</a>.</strong>
+                <strong>Derechos de autor &copy; 2023 <a href="https://avalperu.com/">Aval Perú</a>.</strong>
                 Reservados todos los derechos.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 1.1.0

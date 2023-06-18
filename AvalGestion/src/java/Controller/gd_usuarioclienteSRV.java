@@ -34,7 +34,7 @@ public class gd_usuarioclienteSRV extends HttpServlet {
                     listUserClients(request, response);
                 } else if (action.equals("getUserClients")) {
                     getUserClients(request, response);
-                } else if (action.equals("registrar")) {
+                } else if (action.equals("saveUserClient")) {
                     saveUserClient(request, response);
                 }
             } else if (change != null) {
@@ -114,7 +114,7 @@ public class gd_usuarioclienteSRV extends HttpServlet {
         }
         try {
             this.getServletConfig().getServletContext()
-                    .getRequestDispatcher("/views/userClientsAdmin.jsp").forward(request, response);
+                    .getRequestDispatcher("/views/usersclientsadmin.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo cargar la vista");
         }
