@@ -38,8 +38,8 @@ public class gd_usuarioclienteSRV extends HttpServlet {
                     saveUserClient(request, response);
                 }
             } else if (change != null) {
-                if (change.equals("changeValidity")) {
-                changeValidity(request, response);
+                if (change.equals("changestatusoff")) {
+                    changeValidity(request, response);
                 } else {
                     changeValidity(request, response);
                 }
@@ -224,7 +224,7 @@ public class gd_usuarioclienteSRV extends HttpServlet {
             dao = new gd_usuarioclienteDAO(con);
             usucli = new gd_usuariocliente();
             
-            if (request.getParameter("change").equals("active")) {
+            if (request.getParameter("change").equals("activestate")) {
                 usucli.setActivo(true);
             } else {
                 usucli.setActivo(false);

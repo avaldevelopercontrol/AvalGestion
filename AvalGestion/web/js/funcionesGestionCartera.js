@@ -1,4 +1,21 @@
+//window.onload = function () {
+//    var fecha = new Date(); //Fecha actual
+//    var mes = fecha.getMonth()+1; //obteniendo mes
+//    var dia = fecha.getDate(); //obteniendo dia
+//    var ano = fecha.getFullYear(); //obteniendo año
+//    
+//    document.getElementById('FechaHasta').value = dia + "/" + mes + "/" + ano;
+//};
+
 $(document).ready(function () {
+    
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth()+1; //obteniendo mes
+    var dia = fecha.getDate(); //obteniendo dia
+    var ano = fecha.getFullYear(); //obteniendo año
+    
+    document.getElementById('dtpFechaHasta').value = dia + "/" + mes + "/" + ano;
+    
     
     $('#tablaGestionCarteras').DataTable({
     language: {
@@ -50,6 +67,12 @@ $(document).ready(function () {
                     }
                 });
     });
+    
+    //Initialize Select2 Elements
+    $('.select2').select2();
+    
+    
+    
 });
 
 var url = "http://localhost:8084/GestionDeudor/gd_gestioncarteraSRV?accion=listarCarteras";

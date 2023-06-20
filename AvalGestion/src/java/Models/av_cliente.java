@@ -2,6 +2,7 @@ package Models;
 
 public class av_cliente {
 
+    private int idUsuario;
     private int nId_Cliente;
     private String cCli_NroDoc;
     private String cCli_Nombre;
@@ -29,6 +30,14 @@ public class av_cliente {
 
     public void setcCli_NroDoc(String cCli_NroDoc) {
         this.cCli_NroDoc = cCli_NroDoc;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getnId_Cliente() {

@@ -258,13 +258,13 @@
                                                                         <% if (objUsuarioCliente.isActivo() == true) { %>
                                                                         <input type="hidden" id="idUsuarioCliente" name="idUsuarioCliente" value="<%=objUsuarioCliente.getIdUsuarioCliente()%>">
                                                                         <input type="hidden" id="idUsuario" name="idUsuario" value="<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>">
-                                                                        <a id="desactivarUsuarioCliente" href="gd_usuarioclienteSRV?cambiar=desactivar&idUsuarioCliente=<%=objUsuarioCliente.getIdUsuarioCliente()%>&idUsuario=<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>" class="btn btn-danger btn-xs"  data-toggle="tooltip" title="Desactivar" data-original-title="Desactivar">
+                                                                        <a id="desactivarUsuarioCliente" href="gd_usuarioclienteSRV?change=changestatusoff&idUsuarioCliente=<%=objUsuarioCliente.getIdUsuarioCliente()%>&idUsuario=<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>" class="btn btn-danger btn-xs"  data-toggle="tooltip" title="Desactivar" data-original-title="Desactivar">
                                                                             <i class="fa fa-remove"></i>
                                                                         </a>
                                                                         <% } else { %>
                                                                         <input type="hidden" id="idUsuarioCliente" value="<%=objUsuarioCliente.getIdUsuarioCliente()%>">
                                                                         <input type="hidden" id="idUsuario" name="idUsuario" value="<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>">
-                                                                        <a id="activarUsuarioCliente" href="gd_usuarioclienteSRV?cambiar=activar&idUsuarioCliente=<%=objUsuarioCliente.getIdUsuarioCliente()%>&idUsuario=<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Activar" data-original-title="Activar">
+                                                                        <a id="activarUsuarioCliente" href="gd_usuarioclienteSRV?change=activestate&idUsuarioCliente=<%=objUsuarioCliente.getIdUsuarioCliente()%>&idUsuario=<%=objUsuarioCliente.getGd_Usuario().getIdUsuario()%>" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Activar" data-original-title="Activar">
                                                                             <i class="fa fa-eye"></i>
                                                                         </a>
                                                                         <% } %>
