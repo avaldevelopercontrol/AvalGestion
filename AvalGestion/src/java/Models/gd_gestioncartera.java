@@ -16,6 +16,15 @@ public class gd_gestioncartera {
     private int nId_OpeCodOut;
     private String cNombre_OpeCodCliOut;
     private Date dDocCobOpe_FecIni;
+    private String cTipoBusqueda;
+
+    public String getcTipoBusqueda() {
+        return cTipoBusqueda;
+    }
+
+    public void setcTipoBusqueda(String cTipoBusqueda) {
+        this.cTipoBusqueda = cTipoBusqueda;
+    }
 
     public String getcCar_Nombre() {
         return cCar_Nombre;

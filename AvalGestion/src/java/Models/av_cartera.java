@@ -3,8 +3,17 @@ package Models;
 public class av_cartera {
     
     private int idUsuario;
+    private int nId_Cliente;
     private int nId_Cartera;
     private String cCar_Nombre;
+
+    public int getnId_Cliente() {
+        return nId_Cliente;
+    }
+
+    public void setnId_Cliente(int nId_Cliente) {
+        this.nId_Cliente = nId_Cliente;
+    }
 
     public String getcCar_Nombre() {
         return cCar_Nombre;

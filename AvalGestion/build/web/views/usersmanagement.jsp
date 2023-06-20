@@ -198,24 +198,26 @@
                                     <div class="card-body">
                                         <form class="form-horizontal" action="gd_gestioncarteraSRV?action=searchnegotiations" method="POST">
                                             <div class="row">
+                                                
                                                 <div class="col-sm-6">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                                        </div>
-                                                        <input id="txtidUsuario" type="text" class="form-control form-control-sm" placeholder="Id Usuario" 
-                                                               readonly="true" name="txtidUsuario" value="${gd_usuario.idUsuario}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="input-group mb-12">
-                                                        <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input id="txtnombreUsuario" type="text" class="form-control form-control-sm" placeholder="Nombre Usuario" 
-                                                               readonly="" name="txtnombreUsuario" value="${gd_usuario.nombreUsuario}">
+                                                        <input id="txtnombreUsuario" type="text" class="form-control form-control-sm" placeholder="Nombres de Usuario" 
+                                                               name="txtnombreUsuario" maxlength="350" value="${gd_usuario.nombreUsuario}" readonly>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaDesde" name="dtpFechaDesde"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaHasta" name="dtpFechaHasta"/>
+                                                    </div>
+                                                </div>    
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -236,28 +238,13 @@
                                                 <div class="col-md-6">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-calendar nav-icon"> Desde: </i></span>
-                                                        </div>
-                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaDesde" name="dtpFechaDesde"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="fas fa-calendar nav-icon"> Hasta2: </i></span>
-                                                        </div>
-                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaHasta" name="dtpFechaHasta"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-search nav-icon"></i></span>
                                                         </div>
                                                         <select class="form-control form-control-sm"  name="cboBuscarPor" autofocus=""  required="">
                                                             <option value="0">Buscar Por:</option>
+                                                            <option value="C">Código Cliente</option>
+                                                            <option value="R">RUC</option>
+                                                            <option value="D">DNI</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -294,10 +281,18 @@
                                                                 <th>Importe</th>
                                                                 <th>Ult. Gestión</th>
                                                                 <th>Status</th>
-                                                                <th>Cantidad</th>
-                                                                <th>Ver</th> 
                                                             </tr>
                                                         </thead>
+                                                        <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">
+                                                            <tr>
+                                                                <td>${lstGestiones.cCar_Nombre}</td>
+                                                                <td>${lstGestiones.cPers_CodCliente}</td>
+                                                                <td>${lstGestiones.cPers_Nombres}</td>
+                                                                <td>${lstGestiones.nDoc_ImpTotal}</td>
+                                                                <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
+                                                                <td>${lstGestiones.dDocCobOpe_FecIni}</td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </table>
                                                 </div>
                                             </div>
