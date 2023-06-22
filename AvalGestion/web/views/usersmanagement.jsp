@@ -155,7 +155,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="gd_gestioncarteraSRV?action=presentarGestionCartera" class="nav-link active">
+                                        <a href="gd_gestioncarteraSRV?action=getmanagementportfolios" class="nav-link active">
                                             <i class="far fa-calendar nav-icon"></i>
                                             <p>Llamadas</p>
                                         </a>
@@ -265,7 +265,7 @@
                                                             <%--<a class="btn btn-primary">
                                                                 <i class="fa fa-search"></i> Buscar 
                                                             </a>--%>
-                                                            <button type="submit" id="btnActualizar" name="btnActualizar" value="Actualizar" class="btn btn-primary"><i class="fa fa-search"></i> Actualizar</button>
+                                                            <button type="submit" id="btnBuscar" name="btnBuscar" value="Buscar" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -10,11 +10,7 @@ import Models.gd_usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +29,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         String action = request.getParameter("action");
-        
         try {
             if (action != null) {
                 if (action.equals("getmanagementportfolios")) {
@@ -53,29 +48,19 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                     .getRequestDispatcher("/login.jsp").forward(request, response);
         }
         
-        Connection con = null;
-        con = Conection.getConexion();
-            
-        gd_gestioncarteraDAO dao;
-        
-//        DateFormat dateFormat = new SimpleDateFormat("d/MM/yyyy");
-//        String FechaActual = dateFormat.format(Calendar.getInstance().getTime());
-
         int idUsuario = 0;
+        av_cartera car = new av_cartera();
+        gd_usuario usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
+            
         try {
-            av_cartera car = new av_cartera();
-            gd_usuario usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
+            
             idUsuario = usuSession.getIdUsuario();
-            
             car.setIdUsuario(idUsuario);
-            
-//            request.setAttribute("FechaDesde", FechaActual);
-//            request.setAttribute("FechaHasta", FechaActual);
-            
             request.setAttribute("gd_usuario", usuSession);
-            
             this.getwallets(request);
         } catch (Exception e) {
+        } finally {
+            usuSession = null;
         }
         
         try {
@@ -105,8 +90,9 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             av_carteras = null;
         }
     }
-    
+
     private void searchnegotiations(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         if (request.getSession().getAttribute("gd_usuarioSession") == null) {
             this.getServletConfig().getServletContext()
                     .getRequestDispatcher("/login.jsp").forward(request, response);
@@ -115,51 +101,58 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         Connection con = null;
         con = Conection.getConexion();
         gd_gestioncarteraDAO dao = new gd_gestioncarteraDAO(con);
-        
+
         av_clienteDAO daoCli = new av_clienteDAO(con);
         av_cliente beCli = new av_cliente();
         av_cartera beCar = new av_cartera();
-        
-        gd_gestioncartera beGesCar = new gd_gestioncartera();
         List<gd_gestioncartera> lstGestiones = new ArrayList<gd_gestioncartera>();
-        
-        if (request.getParameter("txtnombreUsuario") != null
+        gd_gestioncartera beGesCar = new gd_gestioncartera();
+
+        int idUsuario = 0;
+
+        try {
+
+            if (request.getParameter("txtnombreUsuario") != null
                 && request.getParameter("cboCartera") != null
                 && request.getParameter("dtpFechaDesde") != null
                 && request.getParameter("dtpFechaHasta") != null) {
-            
-            try {
-                //Obtener el Id del Cliente
+
+                //Inicio - Obtener el Id del Cliente
                 int idCartera = Integer.parseInt(request.getParameter("cboCartera"));
                 beCar.setnId_Cartera(idCartera);
                 beCli = daoCli.getClientexCartera(beCar);
-                
+                //Fin - Obtener el Id del Cliente
+
                 beGesCar.setnId_Cliente(beCli.getnId_Cliente());
                 beGesCar.setnId_Cartera(idCartera);
                 beGesCar.setcTipoBusqueda(request.getParameter("cboBuscarPor"));
                 beGesCar.setcPers_CodCliente(request.getParameter("txtEncontrarPor"));
                 beGesCar.setcPers_RUC(request.getParameter("txtEncontrarPor"));
                 beGesCar.setcPers_DNI(request.getParameter("txtEncontrarPor"));
-                
+
                 lstGestiones = dao.listarGestionCarteras(beGesCar);
                 request.setAttribute("lstGestiones", lstGestiones);
-            } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo cargar los registros!!!" + e.getMessage());
-            } finally {
-                dao = null;
-                daoCli = null;
-                lstGestiones = null;
+                
+                
             }
-     
-            try {
-                this.getServletConfig().getServletContext()
-                        .getRequestDispatcher("/views/usersmanagement.jsp").forward(request, response);
-            } catch (Exception e) {
-                request.setAttribute("msje", "No se pudo cargar la vista");
-            }
+
+            this.getwallets(request);
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se pudo cargar la vista");
+        } finally {
+            lstGestiones = null;
+            daoCli = null;
+            beGesCar = null;
+        }
+        
+        try {
+            this.getServletConfig().getServletContext()
+                    .getRequestDispatcher("/views/usersmanagement.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se pudo cargar la vista");
         }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -204,4 +197,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    
 }

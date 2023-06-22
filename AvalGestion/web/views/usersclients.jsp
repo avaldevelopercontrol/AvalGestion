@@ -160,7 +160,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="gd_gestioncarteraSRV?accion=presentarGestionCartera" class="nav-link">
+                                        <a href="gd_gestioncarteraSRV?action=getmanagementportfolios" class="nav-link">
                                             <i class="far fa-calendar nav-icon"></i>
                                             <p>Llamadas</p>
                                         </a>
