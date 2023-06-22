@@ -1,6 +1,8 @@
 <%@page import="javax.xml.ws.Response"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="idCartera" scope="request" class="java.lang.String" />
+<jsp:useBean id="cTipoBusqueda" scope="request" class="java.lang.String" />
 <!DOCTYPE html>
 <%
     if (session.getAttribute("gd_usuarioSession") != null ) {        
@@ -116,7 +118,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                             with font-awesome or any other icon font library -->
-                            <li class="nav-item menu-open">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-edit"></i>
                                     <p>
@@ -145,7 +147,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu">
+                            <li class="nav-item menu-open">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-paste"></i>
                                     <p>
@@ -228,7 +230,7 @@
                                                         <select class="form-control form-control-sm select2"  name="cboCartera" autofocus=""  required>
                                                             <option value="0">Seleccione Cartera</option>
                                                             <c:forEach items="${av_carteras}" var="av_carteras">
-                                                                <option value="${av_carteras.nId_Cartera}">${av_carteras.cCar_Nombre}</option>
+                                                                <option value="${av_carteras.nId_Cartera}" ${av_carteras.nId_Cartera == idCartera ? 'selected' : ''}>${av_carteras.cCar_Nombre}</option>
                                                             </c:forEach>
                                                         </select>
                                                     </div>
@@ -242,9 +244,9 @@
                                                         </div>
                                                         <select class="form-control form-control-sm" id="cboBuscarPor" name="cboBuscarPor" autofocus="" required="">
                                                             <option value="0">Buscar Por:</option>
-                                                            <option value="C">Código Cliente</option>
-                                                            <option value="R">RUC</option>
-                                                            <option value="D">DNI</option>
+                                                            <c:forEach items="${gd_tipobusquedas}" var="gd_tipobusquedas">
+                                                                <option value="${gd_tipobusquedas.cTipoBusqueda}" ${gd_tipobusquedas.cTipoBusqueda == cTipoBusqueda ? 'selected' : ''}>${gd_tipobusquedas.cTipoBusquedaNombre}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>

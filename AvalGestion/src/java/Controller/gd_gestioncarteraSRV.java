@@ -2,10 +2,12 @@ package Controller;
 
 import Dao.av_clienteDAO;
 import Dao.gd_gestioncarteraDAO;
+import Dao.gd_tipobusquedaDAO;
 import Models.Conection;
 import Models.av_cartera;
 import Models.av_cliente;
 import Models.gd_gestioncartera;
+import Models.gd_tipobusqueda;
 import Models.gd_usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,6 +61,7 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             car.setIdUsuario(idUsuario);
             request.setAttribute("gd_usuario", usuSession);
             this.getwallets(request);
+            this.getsearchtype(request);
         } catch (Exception e) {
         } finally {
             usuSession = null;
@@ -82,7 +85,7 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         av_cartera car = new av_cartera();
         gd_usuario usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
         car.setIdUsuario(usuSession.getIdUsuario());
-       List<av_cartera> av_carteras = new ArrayList<av_cartera>();
+        List<av_cartera> av_carteras = new ArrayList<av_cartera>();
         try {
             av_carteras = dao.listarCarteras(car);
             request.setAttribute("av_carteras", av_carteras);
@@ -91,6 +94,26 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         } finally {
             dao = null;
             av_carteras = null;
+        }
+        
+    }
+    
+    private void getsearchtype(HttpServletRequest request) throws Exception {
+        
+        Connection con = null;
+        con = Conection.getConexion();
+        
+        gd_tipobusquedaDAO dao = new gd_tipobusquedaDAO(con);
+        
+        List<gd_tipobusqueda> gd_tipobusquedaLst = new ArrayList<gd_tipobusqueda>();
+        try {
+            gd_tipobusquedaLst = dao.listarTipoBusqueda();
+            request.setAttribute("gd_tipobusquedas", gd_tipobusquedaLst);
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se pudo cargar los Tipo de Busqueda :( " + e.getMessage());
+        } finally {
+            dao = null;
+            gd_tipobusquedaLst = null;
         }
         
     }
@@ -114,8 +137,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         List<gd_gestioncartera> lstGestiones = new ArrayList<gd_gestioncartera>();
         gd_gestioncartera beGesCar = new gd_gestioncartera();
         
-        int idUsuario = 0;
-        
         try {
             
             if (request.getParameter("txtnombreUsuario") != null
@@ -125,6 +146,8 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                 
                 //Inicio - Obtener el Id del Cliente
                 int idCartera = Integer.parseInt(request.getParameter("cboCartera"));
+                String cTipoBusqueda = request.getParameter("cboBuscarPor");
+                
                 beCar.setnId_Cartera(idCartera);
                 beCli = daoCli.getClientexCartera(beCar);
                 //Fin - Obtener el Id del Cliente
@@ -137,9 +160,14 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                 beGesCar.setcPers_DNI(request.getParameter("txtEncontrarPor"));
                 
                 lstGestiones = dao.listarGestionCarteras(beGesCar);
+                
+                this.getwallets(request);
+                this.getsearchtype(request);
                 request.setAttribute("lstGestiones", lstGestiones);
                 request.setAttribute("gd_usuario", usuSession);
                 request.setAttribute("gd_gestioncartera", beGesCar);
+                request.setAttribute("idCartera", String.valueOf(idCartera));
+                request.setAttribute("cTipoBusqueda", String.valueOf(cTipoBusqueda));
                 
             }
         } catch (Exception e) {
