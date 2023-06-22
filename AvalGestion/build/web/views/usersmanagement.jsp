@@ -240,7 +240,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-search nav-icon"></i></span>
                                                         </div>
-                                                        <select class="form-control form-control-sm"  name="cboBuscarPor" autofocus=""  required="">
+                                                        <select class="form-control form-control-sm" id="cboBuscarPor" name="cboBuscarPor" autofocus="" required="">
                                                             <option value="0">Buscar Por:</option>
                                                             <option value="C">Código Cliente</option>
                                                             <option value="R">RUC</option>
@@ -254,7 +254,7 @@
                                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                         </div>
                                                         <input id="EncontrarPor" type="text" class="form-control form-control-sm" placeholder="Ingrese valor" 
-                                                               name="txtEncontrarPor" maxlength="350">
+                                                               name="txtEncontrarPor" maxlength="350" value="${gd_gestioncartera.cPers_CodCliente}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -262,9 +262,6 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <div class="card-header" style="text-align: center">
-                                                            <%--<a class="btn btn-primary">
-                                                                <i class="fa fa-search"></i> Buscar 
-                                                            </a>--%>
                                                             <button type="submit" id="btnBuscar" name="btnBuscar" value="Buscar" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                                         </div>
                                                     </div>
@@ -276,11 +273,11 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Cartera</th>
-                                                                <th>Cod. Cliente</th>
+                                                                <th>Cod.Cliente</th>
                                                                 <th>Deudor</th>
                                                                 <th>Importe</th>
-                                                                <th>Ult. Gestión</th>
                                                                 <th>Status</th>
+                                                                <th>Ult. Gestión</th>
                                                             </tr>
                                                         </thead>
                                                         <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">

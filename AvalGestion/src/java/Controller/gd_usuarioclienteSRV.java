@@ -194,6 +194,8 @@ public class gd_usuarioclienteSRV extends HttpServlet {
                 daoUsuarioCliente.registrarUsuarioCliente(usucli);
                 
                 response.sendRedirect("gd_usuarioclienteSRV?action=getUserClients&idUsuario=" + request.getParameter("txtidUsuario"));
+                
+                
             } catch (Exception e) {
                 request.setAttribute("msje",
                         "No se pudo registrar el Cliente" + e.getMessage());
