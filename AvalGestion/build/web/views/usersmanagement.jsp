@@ -197,10 +197,17 @@
                             <div class="col-sm-12">
                                 <!-- Form Element sizes -->
                                 <div class="card card-info">
+                                    
+                                    <div class="card-header">
+                                        <h3 class="card-title">Búsqueda por Cartera</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="card-body">
                                         <form class="form-horizontal" action="gd_gestioncarteraSRV?action=searchnegotiations" method="POST">
                                             <div class="row">
-                                                
                                                 <div class="col-sm-6">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -280,6 +287,7 @@
                                                                 <th>Importe</th>
                                                                 <th>Status</th>
                                                                 <th>Ult. Gestión</th>
+                                                                <th>Ver</th>
                                                             </tr>
                                                         </thead>
                                                         <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">
@@ -290,6 +298,18 @@
                                                                 <td>${lstGestiones.nDoc_ImpTotal}</td>
                                                                 <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
                                                                 <td>${lstGestiones.dDocCobOpe_FecIni}</td>
+                                                                <td>
+                                                                    <a href="<c:url value="lstGestiones">
+                                                                                <c:param name="action" value="getuser" />
+                                                                                <c:param name="nId_Cliente" value="${lstGestiones.nId_Cliente}" />
+                                                                                <c:param name="nId_Cartera" value="${lstGestiones.nId_Cartera}" />
+                                                                                <c:param name="nId_PersDeudor" value="${lstGestiones.nId_PersDeudor}" />
+                                                                            </c:url>">
+                                                                            <button type="button" class="btn btn-warning btn-xs" data-toggle="tooltip"  title="Editar" data-original-title="Editar">
+                                                                                <i class="fa fa-eye"></i>
+                                                                            </button>
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                     </table>
