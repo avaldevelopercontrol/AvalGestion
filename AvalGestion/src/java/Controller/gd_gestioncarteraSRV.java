@@ -2,11 +2,13 @@ package Controller;
 
 import Dao.av_clienteDAO;
 import Dao.gd_gestioncarteraDAO;
+import Dao.gd_gestiondeudorDAO;
 import Dao.gd_tipobusquedaDAO;
 import Models.Conection;
 import Models.av_cartera;
 import Models.av_cliente;
 import Models.gd_gestioncartera;
+import Models.gd_gestiondeudor;
 import Models.gd_tipobusqueda;
 import Models.gd_usuario;
 import java.io.IOException;
@@ -130,11 +132,14 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         Connection con = null;
         con = Conection.getConexion();
         gd_gestioncarteraDAO dao = new gd_gestioncarteraDAO(con);
+        gd_gestiondeudorDAO daoDeudor = new gd_gestiondeudorDAO(con);
         
         av_clienteDAO daoCli = new av_clienteDAO(con);
         av_cliente beCli = new av_cliente();
         av_cartera beCar = new av_cartera();
-        List<gd_gestioncartera> lstGestiones = new ArrayList<gd_gestioncartera>();
+        List<gd_gestioncartera> lstGestionCarteras = new ArrayList<gd_gestioncartera>();
+        List<gd_gestiondeudor> lstGestionDeudores = new ArrayList<gd_gestiondeudor>();
+        
         gd_gestioncartera beGesCar = new gd_gestioncartera();
         
         try {
@@ -152,6 +157,7 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                 beCli = daoCli.getClientexCartera(beCar);
                 //Fin - Obtener el Id del Cliente
                 
+                //Inicio - Gestion Carteras
                 beGesCar.setnId_Cliente(beCli.getnId_Cliente());
                 beGesCar.setnId_Cartera(idCartera);
                 beGesCar.setcTipoBusqueda(request.getParameter("cboBuscarPor"));
@@ -159,11 +165,21 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                 beGesCar.setcPers_RUC(request.getParameter("txtEncontrarPor"));
                 beGesCar.setcPers_DNI(request.getParameter("txtEncontrarPor"));
                 
-                lstGestiones = dao.listarGestionCarteras(beGesCar);
+                lstGestionCarteras = dao.listarGestionCarteras(beGesCar);
+                //Fin - Gestion Carteras
+                
+                //Inicio - Gestion Deudores
+                lstGestionDeudores = daoDeudor.listarGestionDeudores(beCli.getnId_Cliente(), idCartera, 
+                                                                     beGesCar.getcTipoBusqueda(), 
+                                                                     beGesCar.getcPers_CodCliente(), 
+                                                                     beGesCar.getcPers_RUC(), 
+                                                                     beGesCar.getcPers_DNI());
+                //Fin - Gestion Deudores
                 
                 this.getwallets(request);
                 this.getsearchtype(request);
-                request.setAttribute("lstGestiones", lstGestiones);
+                request.setAttribute("lstGestiones", lstGestionCarteras);
+                request.setAttribute("lstGestionDeudores", lstGestionDeudores);
                 request.setAttribute("gd_usuario", usuSession);
                 request.setAttribute("gd_gestioncartera", beGesCar);
                 request.setAttribute("idCartera", String.valueOf(idCartera));
@@ -173,7 +189,8 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo cargar la vista");
         } finally {
-            lstGestiones = null;
+            lstGestionCarteras = null;
+            lstGestionDeudores = null;
             daoCli = null;
             beGesCar = null;
             usuSession = null;

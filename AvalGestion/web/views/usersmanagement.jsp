@@ -177,7 +177,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Registrar Usuario - Cliente</h1>
+                                <h1 class="m-0">Gestión - LLamadas</h1>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
@@ -195,11 +195,12 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12">
+                                
                                 <!-- Form Element sizes -->
                                 <div class="card card-info">
                                     
                                     <div class="card-header">
-                                        <h3 class="card-title">Búsqueda por Cartera</h3>
+                                        <h3 class="card-title">Resultado por Cartera</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                                         </div>
@@ -287,7 +288,6 @@
                                                                 <th>Importe</th>
                                                                 <th>Status</th>
                                                                 <th>Ult. Gestión</th>
-                                                                <th>Ver</th>
                                                             </tr>
                                                         </thead>
                                                         <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">
@@ -298,18 +298,7 @@
                                                                 <td>${lstGestiones.nDoc_ImpTotal}</td>
                                                                 <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
                                                                 <td>${lstGestiones.dDocCobOpe_FecIni}</td>
-                                                                <td>
-                                                                    <a href="<c:url value="lstGestiones">
-                                                                                <c:param name="action" value="getuser" />
-                                                                                <c:param name="nId_Cliente" value="${lstGestiones.nId_Cliente}" />
-                                                                                <c:param name="nId_Cartera" value="${lstGestiones.nId_Cartera}" />
-                                                                                <c:param name="nId_PersDeudor" value="${lstGestiones.nId_PersDeudor}" />
-                                                                            </c:url>">
-                                                                            <button type="button" class="btn btn-warning btn-xs" data-toggle="tooltip"  title="Editar" data-original-title="Editar">
-                                                                                <i class="fa fa-eye"></i>
-                                                                            </button>
-                                                                    </a>
-                                                                </td>
+                                                                
                                                             </tr>
                                                         </c:forEach>
                                                     </table>
@@ -318,8 +307,81 @@
                                         </form>
                                     </div>
                                 </div>
+                                                    
+                                                    
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Resultado por Deudor</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="card card-info">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table id="tablaGestionDeudores" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Fecha</th>
+                                                            <th>Gestor</th>
+                                                            <th>Documento</th>
+                                                            <th>Comentario</th>
+                                                            <th>Comentario</th>
+                                                            <th>Accion</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <c:forEach var="lstGestionDeudores" items="${lstGestionDeudores}" varStatus="iteracion">
+                                                        <tr>
+                                                            <td>${lstGestionDeudores.dDocCobOpe_FecIni}</td>
+                                                            <td>${lstGestionDeudores.nId_OpeCodOut}</td>
+                                                            <td>${lstGestionDeudores.nId_DocxCobrar}</td>
+                                                            <td>${lstGestionDeudores.tip_gestion}</td>
+                                                            <td>${lstGestionDeudores.cDocOpeCobOut_Descr}</td>
+                                                            <td>
+                                                                <a href="<c:url value="lstGestiones">
+                                                                            <c:param name="action" value="getuser" />
+                                                                            <c:param name="nId_PersDeudor" value="${lstGestionDeudores.nId_OpeCodOut}" />
+                                                                        </c:url>">
+                                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip"  title="Descargar" data-original-title="Descargar">
+                                                                            <i class="fa fa-download"></i>
+                                                                        </button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                    
                             </div>
                         </div>
+                                                    
+                        <div class="modal fade" id="modal-lg">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Large Modal</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>One fine body&hellip;</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
+
                     </div>
                 </section>
             </div>
