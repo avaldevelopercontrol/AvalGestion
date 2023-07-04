@@ -3,6 +3,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="idCartera" scope="request" class="java.lang.String" />
 <jsp:useBean id="cTipoBusqueda" scope="request" class="java.lang.String" />
+<jsp:useBean id="msjValida" scope="request" class="java.lang.String" />
+
+<jsp:useBean id="lstGesConNoCon" scope="request" class="java.util.ArrayList" /> 
+<%@page import="Models.*"%>
+
 <!DOCTYPE html>
 <%
     if (session.getAttribute("gd_usuarioSession") != null ) {        
@@ -220,14 +225,18 @@
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
-                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaDesde" name="dtpFechaDesde"/>
+                                                        <input type="hidden" id="hdDesde" value="${gd_gestioncartera.dDocCobOpe_FecIni}">
+                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaDesde" 
+                                                               name="dtpFechaDesde" />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
-                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaHasta" name="dtpFechaHasta"/>
+                                                        <input type="hidden" id="hdHasta" value="${gd_gestioncartera.dDocCobOpe_FecFin}">
+                                                        <input type="date" class="form-control form-control-sm" id="dtpFechaHasta" 
+                                                               name="dtpFechaHasta" />
                                                     </div>
-                                                </div>    
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -274,117 +283,285 @@
                                                         <div class="card-header" style="text-align: center">
                                                             <button type="submit" id="btnBuscar" name="btnBuscar" value="Buscar" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                                         </div>
+                                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl">
+                                                          Launch Extra Large Modal
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table id="tablaGestionCarteras" class="table table-bordered table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Cartera</th>
-                                                                <th>Cod.Cliente</th>
-                                                                <th>Deudor</th>
-                                                                <th>Importe</th>
-                                                                <th>Status</th>
-                                                                <th>Ult. Gestión</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">
-                                                            <tr>
-                                                                <td>${lstGestiones.cCar_Nombre}</td>
-                                                                <td>${lstGestiones.cPers_CodCliente}</td>
-                                                                <td>${lstGestiones.cPers_Nombres}</td>
-                                                                <td>${lstGestiones.nDoc_ImpTotal}</td>
-                                                                <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
-                                                                <td>${lstGestiones.dDocCobOpe_FecIni}</td>
-                                                                
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </table>
-                                                </div>
+                                                    
+                                            <%
+                                                if (!msjValida.equals("") ) {        
+                                            %>
+                                            <div class="social-auth-links text-center">
+                                                <a href="#" class="btn btn-block btn-social btn-warning btn-flat"><i class="fa fa-info"></i> Mensaje: 
+                                                    ${msjValida}
+                                                </a>
                                             </div>
+                                            <%
+                                               }
+                                            %>
+                                                
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <!-- Custom Tabs -->
+                                                    <div class="card">
+                                                        <div class="card-header d-flex p-0">
+                                                            <h3 class="card-title p-3">Resultado</h3>
+                                                            <ul class="nav nav-pills ml-auto p-2">
+                                                                <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Cartera</a></li>
+                                                                <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Deudor</a></li>
+                                                                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Dashboard</a></li>
+                                                            </ul>
+                                                        </div><!-- /.card-header -->
+                                                        <div class="card-body">
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="tab_1">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <table id="tablaGestionCarteras" class="table table-bordered table-hover">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Cartera</th>
+                                                                                        <th>Cod.Cliente</th>
+                                                                                        <th>Deudor</th>
+                                                                                        <th>Importe</th>
+                                                                                        <th>Status</th>
+                                                                                        <th>Ult. Gestión</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <c:forEach var="lstGestiones" items="${lstGestiones}" varStatus="iteracion">
+                                                                                    <tr>
+                                                                                        <td>${lstGestiones.cCar_Nombre}</td>
+                                                                                        <td>${lstGestiones.cPers_CodCliente}</td>
+                                                                                        <td>${lstGestiones.cPers_Nombres}</td>
+                                                                                        <td>${lstGestiones.nDoc_ImpTotal}</td>
+                                                                                        <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
+                                                                                        <td>${lstGestiones.dDocCobOpe_FecIni}</td>
+
+                                                                                    </tr>
+                                                                                </c:forEach>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <!-- /.tab-pane -->
+                                                                <div class="tab-pane" id="tab_2">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <table id="tablaGestionDeudores" class="table table-bordered table-hover">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Fecha</th>
+                                                                                        <th>Gestor</th>
+                                                                                        <th>Documento</th>
+                                                                                        <th>Comentario</th>
+                                                                                        <th>Comentario</th>
+                                                                                        <th>Accion</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <c:forEach var="lstGestionDeudores" items="${lstGestionDeudores}" varStatus="iteracion">
+                                                                                    <tr>
+                                                                                        <td>${lstGestionDeudores.dDocCobOpe_FecIni}</td>
+                                                                                        <td>${lstGestionDeudores.cUsr_Nombres}</td>
+                                                                                        <td>${lstGestionDeudores.nId_DocxCobrar}</td>
+                                                                                        <td>${lstGestionDeudores.cNomTipoGestion}</td>
+                                                                                        <td>${lstGestionDeudores.cDocOpeCobOut_Descr}</td>
+                                                                                        <td>
+                                                                                            <a href="<c:url value="lstGestiones">
+                                                                                                        <c:param name="action" value="getuser" />
+                                                                                                        <c:param name="nId_PersDeudor" value="${lstGestionDeudores.nId_OpeCodOut}" />
+                                                                                                    </c:url>">
+                                                                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip"  title="Descargar" data-original-title="Descargar">
+                                                                                                        <i class="fa fa-download"></i>
+                                                                                                    </button>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </c:forEach>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.tab-pane -->
+                                                                <div class="tab-pane" id="tab_3">
+                                                                    <div class="row">
+                                                                        <%
+                                                                            for (int i = 0; i < lstGesConNoCon.size(); i++) {
+                                                                                av_DocxCobrarOpe objConNoCon = (av_DocxCobrarOpe)lstGesConNoCon.get(i);
+                                                                                if (objConNoCon.getcNombre_OpeCodCliOut().equals("TIENE RECLAMO - TICKET")) { 
+                                                                        %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-danger">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-pie-graph"></i>
+                                                                                </div>
+                                                                                <a href="gd_usuarioSRV?action=listusers" class="small-box-footer"> Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.col -->
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("SOLICITUD DE FRACCIONAMIENTO")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-warning">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-person-add"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PROMESA DE PAGO")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-success">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-stats-bars"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("INDICA QUE PAGO")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-success">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-stats-bars"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO CONTESTA")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-danger">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-pie-graph"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PRESENTARA RECLAMO")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-danger">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-pie-graph"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO GESTIONAR A SOLICITUD DEL CLIENTE")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-warning">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-person-add"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } else { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-info">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-bag"></i>
+                                                                                </div>
+                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <% } %>
+                                                                        <% } %>
+                                                                    <!-- /.col -->
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.tab-pane -->
+                                                            </div>
+                                                            <!-- /.tab-content -->
+                                                        </div><!-- /.card-body -->
+                                                    </div>
+                                                    <!-- ./card -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
                                         </form>
                                     </div>
                                 </div>
-                                                    
-                                                    
-                                <div class="card card-info">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Resultado por Deudor</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="card card-info">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <table id="tablaGestionDeudores" class="table table-bordered table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Fecha</th>
-                                                            <th>Gestor</th>
-                                                            <th>Documento</th>
-                                                            <th>Comentario</th>
-                                                            <th>Comentario</th>
-                                                            <th>Accion</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <c:forEach var="lstGestionDeudores" items="${lstGestionDeudores}" varStatus="iteracion">
-                                                        <tr>
-                                                            <td>${lstGestionDeudores.dDocCobOpe_FecIni}</td>
-                                                            <td>${lstGestionDeudores.nId_OpeCodOut}</td>
-                                                            <td>${lstGestionDeudores.nId_DocxCobrar}</td>
-                                                            <td>${lstGestionDeudores.tip_gestion}</td>
-                                                            <td>${lstGestionDeudores.cDocOpeCobOut_Descr}</td>
-                                                            <td>
-                                                                <a href="<c:url value="lstGestiones">
-                                                                            <c:param name="action" value="getuser" />
-                                                                            <c:param name="nId_PersDeudor" value="${lstGestionDeudores.nId_OpeCodOut}" />
-                                                                        </c:url>">
-                                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip"  title="Descargar" data-original-title="Descargar">
-                                                                            <i class="fa fa-download"></i>
-                                                                        </button>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                                    
                             </div>
                         </div>
-                                                    
-                        <div class="modal fade" id="modal-lg">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Large Modal</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>One fine body&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
-
-
                     </div>
                 </section>
             </div>
+                                                                    
+                                                                    
+    <div class="modal fade" id="modal-xl">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Extra Large Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <strong>Derechos de autor &copy; 2023 <a href="https://avalperu.com/">Aval Perú</a>.</strong>

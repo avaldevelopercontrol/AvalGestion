@@ -1,22 +1,29 @@
-//window.onload = function () {
-//    var fecha = new Date(); //Fecha actual
-//    var mes = fecha.getMonth()+1; //obteniendo mes
-//    var dia = fecha.getDate(); //obteniendo dia
-//    var ano = fecha.getFullYear(); //obteniendo año
-//    
-//    document.getElementById('FechaHasta').value = dia + "/" + mes + "/" + ano;
-//};
 
 $(document).ready(function () {
     
-    var fecha = new Date(); //Fecha actual
-    var mes = fecha.getMonth()+1; //obteniendo mes
-    var dia = fecha.getDate(); //obteniendo dia
-    var ano = fecha.getFullYear(); //obteniendo año
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     
-    document.getElementById('dtpFechaHasta').value = dia + "/" + mes + "/" + ano;
+    var hdDesde = document.getElementById("hdDesde").value;
+    var hdHasta = document.getElementById("hdHasta").value;
     
+    if (hdDesde == '') {
+        $('#dtpFechaDesde').val(today);
+    } else {
+        $('#dtpFechaDesde').val(hdDesde);
+    }
     
+    if (hdHasta == '') {
+      $('#dtpFechaHasta').val(today);  
+    } else {
+        $('#dtpFechaHasta').val(hdHasta);
+    }
+    
+    //$('#dtpFechaDesde').val(today);
+    //$('#dtpFechaHasta').val(today);
+        
     $('#tablaGestionCarteras').DataTable({
     language: {
         "decimal": "",
@@ -30,6 +37,7 @@ $(document).ready(function () {
         "loadingRecords": "Cargando...",
         "processing": "Procesando...",
         "search": "Buscar:",
+        
         "zeroRecords": "Sin resultados encontrados",
         "paginate": {
             "first": "Primero",
@@ -61,34 +69,63 @@ $(document).ready(function () {
         }
     }});
     
-    $("tr #deleteUsuario").click(function (e) {
-        e.preventDefault();
-        var idCliente = $(this).parent().find('#idUsuarioEliminar').val();
-        swal({
-            title: "¿Esta seguro de eliminar?",
-            text: "Una vez eliminado, deberá agregar de nuevo!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Si, eliminar!",
-            cancelButtonText: "No, cancelar!",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        console.log("Ingresa a Eliminar");
-                        eliminarCliente(idCliente);
-                        console.log("Termina Eliminado");
-                        swal("Eliminado!", "El cliente se ha eliminado.", "success");
-                        setTimeout(function () {
-                           parent.location.href = "gd_usuarioSRV?accion=listarUsuarios" 
-                        }, 2000);
-                    } else {
-                        swal("Cancelado", "Cancelaste la eliminación", "error");
-                    }
-                });
-    });
+//    $("#btnBuscar").click(function (e) {
+//        e.preventDefault();
+//        
+//        var nombreUsuario  = document.getElementById("txtnombreUsuario").value;
+//        var idCartera = document.getElementById("cboCartera").value;
+//        var BuscarPor = document.getElementById("cboBuscarPor").value;
+//        var EncontrarPor = document.getElementById("txtEncontrarPor").value;
+//        
+//        var itemsPorPage = 20;
+//        var currentPage = 1;
+//        var totalItems = 0;
+//        var totalPages = 0;
+//        
+//        var Mensaje = "";
+//        var result;
+//        
+//        if (nombreUsuario == '') {
+//            Mensaje = "No hay usuario de consulta";
+//        } else if (idCartera == '0') {
+//            Mensaje = "No seleccionó Cartera";
+//        } else if (BuscarPor == '0') {
+//            Mensaje = "No seleccionó Tipo Búsqueda";
+//        } else if (EncontrarPor == '') {
+//            Mensaje = "No seleccionó Tipo Búsqueda";
+//        }
+//        
+//        if (Mensaje != '') {
+//            //swal("Validación", "Mensaje: " + Mensaje)
+//            //swal("Validación", "Mensaje", "error");
+//            alert("Selecciona información en: " + Mensaje);
+//        }
+//        else {
+//            var url = "gd_gestioncarteraSRV?action=searchnegotiations&iCar=" +idCartera+ "&sPor='"+ BuscarPor+ "'&sEnc='"+EncontrarPor+"'";
+//            $.ajax({
+//            type: 'POST',
+//            url: url,
+//            async: true,
+//            success: function (data) {
+//                
+//                result = data;
+//                totalItems = result.length;
+//                totalPages = Math.ceil(totalItems / itemsPorPage);
+//                
+//                if (totalItems > 0) {
+//                    var startIndex = (currentPage -1) * itemsPorPage;
+//                    var endIdex = Math.min(startIndex + itemsPorPage, data.length);
+//                    
+//                    )
+//                }
+//                
+//               parent.location.href = "gd_gestioncarteraSRV?action=getmanagementportfolios" 
+//                }
+//            });
+//            
+//            
+//        }
+//    });
     
     //Initialize Select2 Elements
     $('.select2').select2();
@@ -97,23 +134,9 @@ $(document).ready(function () {
     
 });
 
-var url = "http://localhost:8084/GestionDeudor/gd_gestioncarteraSRV?accion=listarCarteras";
+function showModals(idCliente, idCartera, idTipoRespuesta) {
 
-function DevuelveCarterasxCliente(controlCliente) {
-    if(controlCliente == 'cboCliente'){
-        
-        var respuestaCliente = document.getElementById(controlCliente).value;
-        
-//        var respuestaCliente = document.getElementById(controlCliente).value;
-        alert(respuestaCliente);
-        location.assign(url);
-        
-//        var params = "?accion=listarCarteras";
-//        gPeticionAjaxGest = false;
-//        gPeticionAjaxGest = crearPeticionAjaxGest("gd_gestioncarteraSRV", params, "True" );
-//        
-//        ajaxRequest.open( 'GET', url + parametrosGET, true );
-//        ajaxRequest.send( null );
+    var dDesde = document.getElementById("dtpFechaDesde").value;
+    var dHasta = document.getElementById("dtpFechaHasta").value;
     
-    }
 }

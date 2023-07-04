@@ -18,7 +18,10 @@
         <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        
+        
         <link rel="shortcut icon" href="dist/img/aval_logo.jpg">
+        
         <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/v4-shims.js"></script> 
         <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/fontawesome.js"> </script>
@@ -330,6 +333,8 @@
         <!-- AdminLTE for demo purposes -->
         <script src="dist/js/demo.js"></script>
         <!-- Page specific script -->
+        
+  
         <script src="js/funcionesUsuarioCliente.js" type="text/javascript"></script>
         <script>
         $(function () {

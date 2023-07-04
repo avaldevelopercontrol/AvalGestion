@@ -5,6 +5,7 @@ import Dao.gd_gestioncarteraDAO;
 import Dao.gd_gestiondeudorDAO;
 import Dao.gd_tipobusquedaDAO;
 import Models.Conection;
+import Models.av_DocxCobrarOpe;
 import Models.av_cartera;
 import Models.av_cliente;
 import Models.gd_gestioncartera;
@@ -75,7 +76,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo cargar la vista");
         }
-        
     }
     
     private void getwallets(HttpServletRequest request) throws Exception {
@@ -97,7 +97,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             dao = null;
             av_carteras = null;
         }
-        
     }
     
     private void getsearchtype(HttpServletRequest request) throws Exception {
@@ -117,7 +116,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             dao = null;
             gd_tipobusquedaLst = null;
         }
-        
     }
 
     private void searchnegotiations(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -139,58 +137,123 @@ public class gd_gestioncarteraSRV extends HttpServlet {
         av_cartera beCar = new av_cartera();
         List<gd_gestioncartera> lstGestionCarteras = new ArrayList<gd_gestioncartera>();
         List<gd_gestiondeudor> lstGestionDeudores = new ArrayList<gd_gestiondeudor>();
+        List<av_DocxCobrarOpe> lstGesConNoCon = new ArrayList<av_DocxCobrarOpe>();
         
         gd_gestioncartera beGesCar = new gd_gestioncartera();
         
         try {
+            String Validacion = "";
             
-            if (request.getParameter("txtnombreUsuario") != null
-                && request.getParameter("cboCartera") != null
-                && request.getParameter("dtpFechaDesde") != null
-                && request.getParameter("dtpFechaHasta") != null) { 
-                
-                //Inicio - Obtener el Id del Cliente
-                int idCartera = Integer.parseInt(request.getParameter("cboCartera"));
-                String cTipoBusqueda = request.getParameter("cboBuscarPor");
-                
-                beCar.setnId_Cartera(idCartera);
-                beCli = daoCli.getClientexCartera(beCar);
-                //Fin - Obtener el Id del Cliente
-                
-                //Inicio - Gestion Carteras
-                beGesCar.setnId_Cliente(beCli.getnId_Cliente());
-                beGesCar.setnId_Cartera(idCartera);
-                beGesCar.setcTipoBusqueda(request.getParameter("cboBuscarPor"));
-                beGesCar.setcPers_CodCliente(request.getParameter("txtEncontrarPor"));
-                beGesCar.setcPers_RUC(request.getParameter("txtEncontrarPor"));
-                beGesCar.setcPers_DNI(request.getParameter("txtEncontrarPor"));
-                
-                lstGestionCarteras = dao.listarGestionCarteras(beGesCar);
-                //Fin - Gestion Carteras
-                
-                //Inicio - Gestion Deudores
-                lstGestionDeudores = daoDeudor.listarGestionDeudores(beCli.getnId_Cliente(), idCartera, 
-                                                                     beGesCar.getcTipoBusqueda(), 
-                                                                     beGesCar.getcPers_CodCliente(), 
-                                                                     beGesCar.getcPers_RUC(), 
-                                                                     beGesCar.getcPers_DNI());
-                //Fin - Gestion Deudores
-                
+            int idCartera = Integer.parseInt(request.getParameter("cboCartera"));
+            String cTipoBusqueda = request.getParameter("cboBuscarPor");
+            
+            if (request.getParameter("txtEncontrarPor").equals("") &&
+                !request.getParameter("cboBuscarPor").equals("0")) {
+                Validacion = "- Si selecciona en Buscar Por, es obligatorio ingresar información de búsqueda -";
+                request.setAttribute("msjValida", Validacion);
                 this.getwallets(request);
                 this.getsearchtype(request);
                 request.setAttribute("lstGestiones", lstGestionCarteras);
                 request.setAttribute("lstGestionDeudores", lstGestionDeudores);
+                request.setAttribute("lstGesConNoCon", lstGesConNoCon);
                 request.setAttribute("gd_usuario", usuSession);
                 request.setAttribute("gd_gestioncartera", beGesCar);
                 request.setAttribute("idCartera", String.valueOf(idCartera));
                 request.setAttribute("cTipoBusqueda", String.valueOf(cTipoBusqueda));
                 
+                this.getServletConfig().getServletContext().getRequestDispatcher("/views/usersmanagement.jsp").forward(request, response);
+                return;
             }
+                
+            if (request.getParameter("txtnombreUsuario") == "" ) {
+                Validacion = "- Usuario Login faltante -";
+                request.setAttribute("msjValida", Validacion);
+                this.getwallets(request);
+                this.getsearchtype(request);
+                request.setAttribute("lstGestiones", lstGestionCarteras);
+                request.setAttribute("lstGestionDeudores", lstGestionDeudores);
+                request.setAttribute("lstGesConNoCon", lstGesConNoCon);
+                request.setAttribute("gd_usuario", usuSession);
+                request.setAttribute("gd_gestioncartera", beGesCar);
+                request.setAttribute("idCartera", String.valueOf(idCartera));
+                request.setAttribute("cTipoBusqueda", String.valueOf(cTipoBusqueda));
+                
+                this.getServletConfig().getServletContext().getRequestDispatcher("/views/usersmanagement.jsp").forward(request, response);
+                return;
+            }
+            
+            if (request.getParameter("cboCartera").equals("0")) {
+                Validacion = Validacion + "- Seleccione Cartera -";
+                request.setAttribute("msjValida", Validacion);
+                this.getwallets(request);
+                this.getsearchtype(request);
+                request.setAttribute("lstGestiones", lstGestionCarteras);
+                request.setAttribute("lstGestionDeudores", lstGestionDeudores);
+                request.setAttribute("lstGesConNoCon", lstGesConNoCon);
+                request.setAttribute("gd_usuario", usuSession);
+                request.setAttribute("gd_gestioncartera", beGesCar);
+                request.setAttribute("idCartera", String.valueOf(idCartera));
+                request.setAttribute("cTipoBusqueda", String.valueOf(cTipoBusqueda));
+                
+                this.getServletConfig().getServletContext().getRequestDispatcher("/views/usersmanagement.jsp").forward(request, response);
+                return;
+            }
+            
+            //Inicio - Obtener el Id del Cliente
+            beCar.setnId_Cartera(idCartera);
+            beCli = daoCli.getClientexCartera(beCar);
+            //Fin - Obtener el Id del Cliente
+
+            //Inicio - Gestion Carteras
+            beGesCar.setnId_Cliente(beCli.getnId_Cliente());
+            beGesCar.setnId_Cartera(idCartera);
+            beGesCar.setcTipoBusqueda(request.getParameter("cboBuscarPor"));
+            beGesCar.setcPers_CodCliente(request.getParameter("txtEncontrarPor"));
+            beGesCar.setcPers_RUC(request.getParameter("txtEncontrarPor"));
+            beGesCar.setcPers_DNI(request.getParameter("txtEncontrarPor"));
+            beGesCar.setdDocCobOpe_FecIni(request.getParameter("dtpFechaDesde"));
+            beGesCar.setdDocCobOpe_FecFin(request.getParameter("dtpFechaHasta"));
+
+            lstGestionCarteras = dao.listarGestionCarteras(beGesCar);
+            //Fin - Gestion Carteras
+
+            //Inicio - Gestion Deudores
+            lstGestionDeudores = daoDeudor.listarGestionDeudores(beCli.getnId_Cliente(), idCartera, 
+                                                                 beGesCar.getcTipoBusqueda(), 
+                                                                 beGesCar.getcPers_CodCliente(), 
+                                                                 beGesCar.getcPers_RUC(), 
+                                                                 beGesCar.getcPers_DNI(),
+                                                                 beGesCar.getdDocCobOpe_FecIni(),
+                                                                 beGesCar.getdDocCobOpe_FecFin()
+                                                                 );
+            //Fin - Gestion Deudores
+            
+            //Inicio - Gestion Contacto / No Contacto
+            lstGesConNoCon = daoDeudor.getContactoNoContacto(beCli.getnId_Cliente(), idCartera, 
+                                                            beGesCar.getcTipoBusqueda(), 
+                                                            beGesCar.getcPers_CodCliente(), 
+                                                            beGesCar.getcPers_RUC(), 
+                                                            beGesCar.getcPers_DNI(),
+                                                            beGesCar.getdDocCobOpe_FecIni(),
+                                                            beGesCar.getdDocCobOpe_FecFin());
+            //Fin - Gestion Contacto / No Contacto
+            
+            this.getwallets(request);
+            this.getsearchtype(request);
+            request.setAttribute("lstGestiones", lstGestionCarteras);
+            request.setAttribute("lstGestionDeudores", lstGestionDeudores);
+            request.setAttribute("lstGesConNoCon", lstGesConNoCon);
+            request.setAttribute("gd_usuario", usuSession);
+            request.setAttribute("gd_gestioncartera", beGesCar);
+            request.setAttribute("idCartera", String.valueOf(idCartera));
+            request.setAttribute("cTipoBusqueda", String.valueOf(cTipoBusqueda));
+            request.setAttribute("msjValida", "");
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo cargar la vista");
         } finally {
             lstGestionCarteras = null;
             lstGestionDeudores = null;
+            lstGesConNoCon = null;
             daoCli = null;
             beGesCar = null;
             usuSession = null;

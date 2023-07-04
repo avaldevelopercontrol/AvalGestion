@@ -15,16 +15,9 @@ public class gd_gestioncartera {
     private Number nDoc_ImpTotal;
     private int nId_OpeCodOut;
     private String cNombre_OpeCodCliOut;
-    private Date dDocCobOpe_FecIni;
+    private String dDocCobOpe_FecIni;
+    private String dDocCobOpe_FecFin;
     private String cTipoBusqueda;
-
-    public String getcTipoBusqueda() {
-        return cTipoBusqueda;
-    }
-
-    public void setcTipoBusqueda(String cTipoBusqueda) {
-        this.cTipoBusqueda = cTipoBusqueda;
-    }
 
     public String getcCar_Nombre() {
         return cCar_Nombre;
@@ -74,11 +67,27 @@ public class gd_gestioncartera {
         this.cPers_RUC = cPers_RUC;
     }
 
-    public Date getdDocCobOpe_FecIni() {
+    public String getcTipoBusqueda() {
+        return cTipoBusqueda;
+    }
+
+    public void setcTipoBusqueda(String cTipoBusqueda) {
+        this.cTipoBusqueda = cTipoBusqueda;
+    }
+
+    public String getdDocCobOpe_FecFin() {
+        return dDocCobOpe_FecFin;
+    }
+
+    public void setdDocCobOpe_FecFin(String dDocCobOpe_FecFin) {
+        this.dDocCobOpe_FecFin = dDocCobOpe_FecFin;
+    }
+
+    public String getdDocCobOpe_FecIni() {
         return dDocCobOpe_FecIni;
     }
 
-    public void setdDocCobOpe_FecIni(Date dDocCobOpe_FecIni) {
+    public void setdDocCobOpe_FecIni(String dDocCobOpe_FecIni) {
         this.dDocCobOpe_FecIni = dDocCobOpe_FecIni;
     }
 

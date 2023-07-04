@@ -5,17 +5,26 @@ import java.util.Date;
 public class gd_gestiondeudor {
     
     private int nId_DocxCobrarOpe;
-    private Date dDocCobOpe_FecIni;
+    private String dDocCobOpe_FecIni;
     private int nId_OpeCodOut;
     private Date dFechCompromisoPago;
     private int nId_DocxCobrar;
     private int tip_gestion;
     private int nid_UsuOpe;
+    private String cUsr_Nombres;
     private Number monto_comp;
     private Number monto_compDolares;
     private String cDocOpeCobOut_Descr;
     private int nId_OpeCodOutNp2;
     private String cNomTipoGestion;
+
+    public String getcUsr_Nombres() {
+        return cUsr_Nombres;
+    }
+
+    public void setcUsr_Nombres(String cUsr_Nombres) {
+        this.cUsr_Nombres = cUsr_Nombres;
+    }
 
     public String getcNomTipoGestion() {
         return cNomTipoGestion;
@@ -33,11 +42,11 @@ public class gd_gestiondeudor {
         this.cDocOpeCobOut_Descr = cDocOpeCobOut_Descr;
     }
 
-    public Date getdDocCobOpe_FecIni() {
+    public String getdDocCobOpe_FecIni() {
         return dDocCobOpe_FecIni;
     }
 
-    public void setdDocCobOpe_FecIni(Date dDocCobOpe_FecIni) {
+    public void setdDocCobOpe_FecIni(String dDocCobOpe_FecIni) {
         this.dDocCobOpe_FecIni = dDocCobOpe_FecIni;
     }
 

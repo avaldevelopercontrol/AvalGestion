@@ -2,6 +2,7 @@ package Dao;
 
 import Models.av_cartera;
 import Models.gd_gestioncartera;
+import Util._util;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -58,8 +59,10 @@ public class gd_gestioncarteraDAO {
                 + "','" + gescarSearch.getcPers_CodCliente()
                 + "','" + gescarSearch.getcPers_RUC()
                 + "','" + gescarSearch.getcPers_DNI()
+                + "','" + _util.getFechaServidor(gescarSearch.getdDocCobOpe_FecIni())
+                + "','" + _util.getFechaServidor(gescarSearch.getdDocCobOpe_FecFin())
                 + "'";
-
+        
         Statement statement = con.createStatement();
 
         try {
@@ -78,7 +81,7 @@ public class gd_gestioncarteraDAO {
                 gescar.setnDoc_ImpTotal(rs.getDouble("nDoc_ImpTotal"));
                 gescar.setnId_OpeCodOut(rs.getInt("nId_OpeCodOut"));
                 gescar.setcNombre_OpeCodCliOut(rs.getString("cNombre_OpeCodCliOut"));
-                gescar.setdDocCobOpe_FecIni(rs.getDate("dDocCobOpe_FecIni"));
+                gescar.setdDocCobOpe_FecIni(rs.getString("dDocCobOpe_FecIni"));
                 gestionCarteras.add(gescar);
             }
             rs.close();

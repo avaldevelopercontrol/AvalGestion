@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%
     if (session.getAttribute("gd_usuarioSession") != null ) {
-        
+      
 %>
 <html lang="en">
     <head>
