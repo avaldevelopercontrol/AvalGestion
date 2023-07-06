@@ -244,7 +244,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-folder nav-icon"></i></span>
                                                         </div>
-                                                        <select class="form-control form-control-sm select2"  name="cboCartera" autofocus=""  required>
+                                                        <select class="form-control form-control-sm select2" id="cboCartera" name="cboCartera" autofocus=""  required>
                                                             <option value="0">Seleccione Cartera</option>
                                                             <c:forEach items="${av_carteras}" var="av_carteras">
                                                                 <option value="${av_carteras.nId_Cartera}" ${av_carteras.nId_Cartera == idCartera ? 'selected' : ''}>${av_carteras.cCar_Nombre}</option>
@@ -283,9 +283,6 @@
                                                         <div class="card-header" style="text-align: center">
                                                             <button type="submit" id="btnBuscar" name="btnBuscar" value="Buscar" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                                         </div>
-                                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl">
-                                                          Launch Extra Large Modal
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,7 +335,6 @@
                                                                                         <td>${lstGestiones.nDoc_ImpTotal}</td>
                                                                                         <td>${lstGestiones.cNombre_OpeCodCliOut}</td>
                                                                                         <td>${lstGestiones.dDocCobOpe_FecIni}</td>
-
                                                                                     </tr>
                                                                                 </c:forEach>
                                                                             </table>
@@ -397,14 +393,15 @@
                                                                             <div class="small-box bg-danger">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <a href="gd_usuarioSRV?action=listusers" class="small-box-footer"> Mas info <i class="fas fa-arrow-circle-right"></i></a>
-                                                                                
+                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <!-- /.col -->
@@ -414,13 +411,15 @@
                                                                             <div class="small-box bg-warning">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-person-add"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-warning btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PROMESA DE PAGO")) { %>
@@ -429,13 +428,34 @@
                                                                             <div class="small-box bg-success">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-stats-bars"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info 
+                                                                                    <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>                                                                                        
+                                                                        <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("SE ENVIO WHATSAPP")) { %>
+                                                                        <div class="col-lg-3 col-6">
+                                                                            <!-- small box -->
+                                                                            <div class="small-box bg-success">
+                                                                                <div class="inner">
+                                                                                    <h3><%= objConNoCon.getNroContactabilidad() %></h3>
+                                                                                    <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
+                                                                                </div>
+                                                                                <div class="icon">
+                                                                                    <i class="ion ion-stats-bars"></i>
+                                                                                </div>
+                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info 
+                                                                                    <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("INDICA QUE PAGO")) { %>
@@ -444,13 +464,16 @@
                                                                             <div class="small-box bg-success">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-stats-bars"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info 
+                                                                                    <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO CONTESTA")) { %>
@@ -465,7 +488,10 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PRESENTARA RECLAMO")) { %>
@@ -474,13 +500,15 @@
                                                                             <div class="small-box bg-danger">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO GESTIONAR A SOLICITUD DEL CLIENTE")) { %>
@@ -489,13 +517,16 @@
                                                                             <div class="small-box bg-warning">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
-
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
                                                                                 </div>
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-person-add"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-warning btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info 
+                                                                                    <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         <% } else { %>
@@ -510,7 +541,10 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-bag"></i>
                                                                                 </div>
-                                                                                <a href="#" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
+                                                                                <button class="btn btn-block btn-info btn-sm" data-toggle="modal" 
+                                                                                        data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
+                                                                                        type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                         
@@ -538,30 +572,47 @@
                 </section>
             </div>
                                                                     
-                                                                    
-    <div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Extra Large Modal</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal fade" id="modalGestiones">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Gestiones</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-inline">
+                                        <label><b>Tipo Gestión: </b> </label>
+                                        <label id="nomTipoGestion"> --------------</label>
+                                    </div><br>
+						
+                                </div>
+                            </div>
+                            <table id="tablaGestionTipificacion" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sub Tipo</th>
+                                        <th class="text-center">Operador</th>
+                                        <th class="text-center">Inicio</th>
+                                        <th class="text-center">Fin</th>
+                                        <th class="text-center">Documento</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyGestionesAll">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
             </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-      
+            <!-- /.modal -->
+            
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <strong>Derechos de autor &copy; 2023 <a href="https://avalperu.com/">Aval Perú</a>.</strong>

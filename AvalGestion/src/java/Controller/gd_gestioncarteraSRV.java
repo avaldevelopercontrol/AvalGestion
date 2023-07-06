@@ -1,5 +1,6 @@
 package Controller;
 
+import Dao.av_DocxCobrarOpeDAO;
 import Dao.av_clienteDAO;
 import Dao.gd_gestioncarteraDAO;
 import Dao.gd_gestiondeudorDAO;
@@ -12,6 +13,8 @@ import Models.gd_gestioncartera;
 import Models.gd_gestiondeudor;
 import Models.gd_tipobusqueda;
 import Models.gd_usuario;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -41,6 +44,8 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                     getmanagementportfolios(request, response);
                 } else if (action.equals("searchnegotiations")) {
                     searchnegotiations(request, response);
+                } else if (action.equals("getmanagementtypifications")) {
+                    getmanagementtypifications(request, response);
                 }
             }
         } finally {            
@@ -238,6 +243,8 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                                                             beGesCar.getdDocCobOpe_FecFin());
             //Fin - Gestion Contacto / No Contacto
             
+            
+            
             this.getwallets(request);
             this.getsearchtype(request);
             request.setAttribute("lstGestiones", lstGestionCarteras);
@@ -266,6 +273,57 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             request.setAttribute("msje", "No se pudo cargar la vista");
         }
         
+    }
+    
+    private void getmanagementtypifications(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        if (request.getSession().getAttribute("gd_usuarioSession") == null) {
+            this.getServletConfig().getServletContext()
+                    .getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
+        Connection con = null;
+        con = Conection.getConexion();
+        
+        av_DocxCobrarOpeDAO dao = new av_DocxCobrarOpeDAO(con);
+        av_clienteDAO daoCli = new av_clienteDAO(con);
+        
+        av_DocxCobrarOpe be = new av_DocxCobrarOpe();
+        av_cartera car = new av_cartera();
+        av_cliente beCli = new av_cliente();
+        
+        gd_usuario usuSession = (gd_usuario)request.getSession().getAttribute("gd_usuarioSession");
+        car.setIdUsuario(usuSession.getIdUsuario());
+        
+        List<av_DocxCobrarOpe> lstGesTipi = new ArrayList<av_DocxCobrarOpe>();
+        
+        try {
+            
+            int idCartera = Integer.parseInt(request.getParameter("nId_Cartera"));
+            //Inicio - Obtener el Id del Cliente
+            car.setnId_Cartera(idCartera);
+            beCli = daoCli.getClientexCartera(car);
+            //Fin - Obtener el Id del Cliente
+            
+            //Inicio - Gestion Carteras
+            be.setnId_Cliente(beCli.getnId_Cliente());
+            be.setnId_Cartera(idCartera);
+            be.setnId_OpeCodOut(Integer.parseInt(request.getParameter("nId_OpeCodOut")));
+            be.setdDocCobOpe_FecIni(request.getParameter("dDesde"));
+            be.setdDocCobOpe_FecFin(request.getParameter("dHasta"));
+
+            lstGesTipi = dao.listarGestionTipificacion(be);
+            //Fin - Gestion Carteras
+            
+            response.setContentType("application/json");
+            response.getWriter().printf(new Gson().toJson(lstGesTipi, new TypeToken<List<av_DocxCobrarOpe>>(){}.getType()));
+//            request.setAttribute("av_carteras", av_carteras);
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se pudo cargar los Perfiles :( " + e.getMessage());
+        } finally {
+            dao = null;
+            lstGesTipi = null;
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -104,6 +104,7 @@ public class gd_gestiondeudorDAO {
             
             while (rs.next() == true) {
                 be = new av_DocxCobrarOpe();
+                be.setnId_OpeCodOut(rs.getInt("nId_OpeCodOut"));
                 be.setcNombre_OpeCodCliOut(rs.getString("cNombre_OpeCodCliOut"));
                 be.setNroContactabilidad(rs.getInt("NroContactabilidad"));
                 lst.add(be);

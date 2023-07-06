@@ -69,74 +69,69 @@ $(document).ready(function () {
         }
     }});
     
-//    $("#btnBuscar").click(function (e) {
-//        e.preventDefault();
-//        
-//        var nombreUsuario  = document.getElementById("txtnombreUsuario").value;
-//        var idCartera = document.getElementById("cboCartera").value;
-//        var BuscarPor = document.getElementById("cboBuscarPor").value;
-//        var EncontrarPor = document.getElementById("txtEncontrarPor").value;
-//        
-//        var itemsPorPage = 20;
-//        var currentPage = 1;
-//        var totalItems = 0;
-//        var totalPages = 0;
-//        
-//        var Mensaje = "";
-//        var result;
-//        
-//        if (nombreUsuario == '') {
-//            Mensaje = "No hay usuario de consulta";
-//        } else if (idCartera == '0') {
-//            Mensaje = "No seleccionó Cartera";
-//        } else if (BuscarPor == '0') {
-//            Mensaje = "No seleccionó Tipo Búsqueda";
-//        } else if (EncontrarPor == '') {
-//            Mensaje = "No seleccionó Tipo Búsqueda";
-//        }
-//        
-//        if (Mensaje != '') {
-//            //swal("Validación", "Mensaje: " + Mensaje)
-//            //swal("Validación", "Mensaje", "error");
-//            alert("Selecciona información en: " + Mensaje);
-//        }
-//        else {
-//            var url = "gd_gestioncarteraSRV?action=searchnegotiations&iCar=" +idCartera+ "&sPor='"+ BuscarPor+ "'&sEnc='"+EncontrarPor+"'";
-//            $.ajax({
-//            type: 'POST',
-//            url: url,
-//            async: true,
-//            success: function (data) {
-//                
-//                result = data;
-//                totalItems = result.length;
-//                totalPages = Math.ceil(totalItems / itemsPorPage);
-//                
-//                if (totalItems > 0) {
-//                    var startIndex = (currentPage -1) * itemsPorPage;
-//                    var endIdex = Math.min(startIndex + itemsPorPage, data.length);
-//                    
-//                    )
-//                }
-//                
-//               parent.location.href = "gd_gestioncarteraSRV?action=getmanagementportfolios" 
-//                }
-//            });
-//            
-//            
-//        }
-//    });
-    
     //Initialize Select2 Elements
     $('.select2').select2();
     
-    
-    
 });
 
-function showModals(idCliente, idCartera, idTipoRespuesta) {
+function CargaGestiones(nId_OpeCodOut, cNombre_OpeCodCliOut) {
 
     var dDesde = document.getElementById("dtpFechaDesde").value;
     var dHasta = document.getElementById("dtpFechaHasta").value;
+    var nId_Cartera = document.getElementById("cboCartera").value;
+    
+    $('#nomTipoGestion').html(cNombre_OpeCodCliOut);
+    
+    if ($.fn.DataTable.isDataTable('#tablaGestionTipificacion')) {
+        $('#tablaGestionTipificacion').DataTable().destroy();
+    }
+    $('#tablaGestionTipificacion tbody').empty();
+    
+    $.post('gd_gestioncarteraSRV?action=getmanagementtypifications', 
+    {   
+        nId_OpeCodOut: nId_OpeCodOut,
+        nId_Cartera: nId_Cartera,
+        dDesde: dDesde,
+        dHasta: dHasta
+    },
+    function (response) {
+        var tabla = "";
+        response.forEach(function (h){
+                        tabla += '<tr>';
+                        tabla += '<td>' + h.cNombre_OpeCodCliOutN2 + '</td>';
+                        tabla += '<td>' + h.cUsr_Nombres + '</td>';
+                        tabla += '<td>' + h.dDocCobOpe_FecIni + '</td>';
+                        tabla += '<td>' + h.dDocCobOpe_FecFin + '</td>';
+                        tabla += '<td>' + h.cDoc_Numero + '</td>';
+                        tabla += '</tr>';
+                    });
+                    $('#tbodyGestionesAll').html(tabla);
+                    
+        $('#tablaGestionTipificacion').DataTable({
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+            
+        }
+});
+    });
+    
     
 }
