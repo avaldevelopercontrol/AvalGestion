@@ -56,6 +56,8 @@ public class av_clienteDAO {
             cliGet = new av_cliente();
             cliGet.setnId_Cliente(rs.getInt("nId_Cliente"));
             cliGet.setcCli_Nombre(rs.getString("cCli_Nombre"));
+            cliGet.setdFecIniProceso(rs.getString("dFecIniProceso").substring(0, 10));
+            cliGet.setdFecFinProceso(rs.getString("dFecFinProceso").substring(0, 10));
         }
         rs.close();
         statement.close();

@@ -7,6 +7,25 @@ public class av_cliente {
     private String cCli_NroDoc;
     private String cCli_Nombre;
     private boolean bEstado;
+    
+    private String dFecIniProceso;
+    private String dFecFinProceso;
+    
+    public String getdFecIniProceso() {
+        return dFecIniProceso;
+    }
+
+    public void setdFecIniProceso(String dFecIniProceso) {
+        this.dFecIniProceso = dFecIniProceso;
+    }
+
+    public String getdFecFinProceso() {
+        return dFecFinProceso;
+    }
+
+    public void setdFecFinProceso(String dFecFinProceso) {
+        this.dFecFinProceso = dFecFinProceso;
+    }
 
     public boolean isbEstado() {
         return bEstado;

@@ -15,8 +15,8 @@ import Models.gd_tipobusqueda;
 import Models.gd_usuario;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
 
 @WebServlet(name = "gd_gestioncarteraSRV", urlPatterns = {"/gd_gestioncarteraSRV"} )
 public class gd_gestioncarteraSRV extends HttpServlet {
@@ -46,6 +49,10 @@ public class gd_gestioncarteraSRV extends HttpServlet {
                     searchnegotiations(request, response);
                 } else if (action.equals("getmanagementtypifications")) {
                     getmanagementtypifications(request, response);
+                } else if (action.equals("downloadImages")) {
+                    //downloadImages(request, response);
+                } else if (action.equals("getportfolio")) {
+                    getportfolio(request, response);
                 }
             }
         } finally {            
@@ -317,7 +324,6 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             
             response.setContentType("application/json");
             response.getWriter().printf(new Gson().toJson(lstGesTipi, new TypeToken<List<av_DocxCobrarOpe>>(){}.getType()));
-//            request.setAttribute("av_carteras", av_carteras);
         } catch (Exception e) {
             request.setAttribute("msje", "No se pudo cargar los Perfiles :( " + e.getMessage());
         } finally {
@@ -325,6 +331,72 @@ public class gd_gestioncarteraSRV extends HttpServlet {
             lstGesTipi = null;
         }
     }
+    
+    private void getportfolio(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        if (request.getSession().getAttribute("gd_usuarioSession") == null) {
+            this.getServletConfig().getServletContext()
+                    .getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
+        Connection con = null;
+        con = Conection.getConexion();
+        
+        av_clienteDAO cliDAO = new av_clienteDAO(con);
+        av_cliente cliBE = new av_cliente();
+            
+        try {
+        
+            int idCartera = Integer.parseInt(request.getParameter("nId_Cartera"));
+            av_cartera beCartera = new av_cartera();
+            beCartera.setnId_Cartera(idCartera);
+            cliBE = cliDAO.getClientexCartera(beCartera);
+            
+            response.setContentType("application/json");
+            response.getWriter().printf(new Gson().toJson(cliBE, new TypeToken<av_cliente>(){}.getType()));
+        } catch (Exception e) {
+            request.setAttribute("msje", "No se pudo cargar los Perfiles :( " + e.getMessage());
+        } finally {
+            cliDAO = null;
+            cliBE = null;
+        }
+    }
+    
+//    private void downloadImages(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        
+//        FTPClient cliente = new FTPClient();
+//        
+//        
+////        
+////        if (request.getSession().getAttribute("gd_usuarioSession") == null) {
+////            this.getServletConfig().getServletContext()
+////                    .getRequestDispatcher("/login.jsp").forward(request, response);
+////        }
+////        
+////        String ip = "192.168.100.60";
+////        String user = "pmartinez";
+////        String pass = "Ml_160";
+////        String localFileDownload = "C:\\Users\\userd\\Desktop\\archivo.xlsx";
+////        String hostFile="/archivo.xlsx";
+////        
+////        ftp = new FTPClient();
+////        
+////        
+//    }
+    
+//    public static void conectar(String ip, String user, String pass) throws SocketException, IOException{
+//        
+//        URL fetchWebsite = new URL("https://theswissbay.ch/pdf/Gentoomen%20Library/Programming/Java/Introduction%20to%20Java%20IO.pdf");
+//        
+//        ReadableByteChannel readableByteChannel = Channels.newChannel(fetchWebsite.openStream());
+//        
+////        try (FileOutputStream fos = new FileOutputStream("C:\\Users\\Downloads\\IntroToJava.pdf")) {
+////            fos.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+////        }
+//        
+//        
+//        
+//    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

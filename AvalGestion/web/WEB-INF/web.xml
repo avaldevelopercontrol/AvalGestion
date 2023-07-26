@@ -28,10 +28,6 @@
         <servlet-name>gd_gestioncarteraSRV</servlet-name>
         <servlet-class>Controller.gd_gestioncarteraSRV</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>Controller.NewServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -51,10 +47,6 @@
     <servlet-mapping>
         <servlet-name>gd_gestioncarteraSRV</servlet-name>
         <url-pattern>/gd_gestioncarteraSRV</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -48,6 +48,8 @@ public class av_DocxCobrarOpeDAO {
                 cobrarOpe.setnId_DocxCobrar(rs.getInt("nId_DocxCobrar"));
                 cobrarOpe.setcDoc_Numero(rs.getString("cDoc_Numero"));
                 cobrarOpe.setnDoc_ImpSaldo(rs.getDouble("nDoc_ImpSaldo"));
+                cobrarOpe.setDuracionSegundo(rs.getInt("DuracionSegundo"));
+                cobrarOpe.setcPers_Nombres(rs.getString("cPers_Nombres"));
                 lstGestionTipificacion.add(cobrarOpe);
             }
             rs.close();

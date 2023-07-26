@@ -18,7 +18,25 @@ public class av_DocxCobrarOpe {
     private int nId_DocxCobrar;
     private String cDoc_Numero;
     private Number nDoc_ImpSaldo;
+    private int DuracionSegundo;
+    private String cPers_Nombres;
 
+    public String getcPers_Nombres() {
+        return cPers_Nombres;
+    }
+
+    public void setcPers_Nombres(String cPers_Nombres) {
+        this.cPers_Nombres = cPers_Nombres;
+    }
+    
+    public int getDuracionSegundo() {
+        return DuracionSegundo;
+    }
+
+    public void setDuracionSegundo(int DuracionSegundo) {
+        this.DuracionSegundo = DuracionSegundo;
+    }
+    
     public int getnId_Cartera() {
         return nId_Cartera;
     }

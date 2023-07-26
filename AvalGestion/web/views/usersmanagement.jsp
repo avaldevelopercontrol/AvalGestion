@@ -14,6 +14,7 @@
 %>
 <html lang="en">
     <head>
+                
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sistema Gestión</title>
@@ -43,6 +44,72 @@
         <link rel="shortcut icon" href="dist/img/aval_logo.jpg">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+    <style type="text/css">
+        
+        .bg-lead-aval
+        {
+            background-color: #676767;
+        }
+        .bg-lead-aval .inner h3,
+        .bg-lead-aval .inner p
+        {
+            color: white;
+        }
+        .bg-lead-aval .btn-warning-aval
+        {
+            background-color: #676767;
+            color: white;
+        }
+        
+        .bg-red-aval
+        {
+            background-color: #f9423a;
+        }
+        .bg-red-aval .inner h3,
+        .bg-red-aval .inner p
+        {
+            color: white;
+        }
+        .bg-red-aval .btn-danger-aval
+        {
+            background-color: #f9423a;
+            color: white;
+        }
+        
+        .bg-blue-entel
+        {
+            background-color: #0154a0;
+            
+        }
+        .bg-blue-entel .inner h3,
+        .bg-blue-entel .inner p
+        {
+            color: white;
+        }
+        .bg-blue-entel .btn-info-entel
+        {
+            background-color: #0154a0;
+            color: white;
+        }
+        
+        .bg-orange-entel
+        {
+            background-color: #ff560a;
+        }
+        .bg-orange-entel .inner h3,
+        .bg-orange-entel .inner p
+        {
+            color: white;
+        }
+        .bg-orange-entel .btn-success-entel
+        {
+            background-color: #ff560a;
+            color: white;
+        }
+        
+    </style>
+    
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -204,13 +271,6 @@
                                 <!-- Form Element sizes -->
                                 <div class="card card-info">
                                     
-                                    <div class="card-header">
-                                        <h3 class="card-title">Resultado por Cartera</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="card-body">
                                         <form class="form-horizontal" action="gd_gestioncarteraSRV?action=searchnegotiations" method="POST">
                                             <div class="row">
@@ -244,7 +304,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-folder nav-icon"></i></span>
                                                         </div>
-                                                        <select class="form-control form-control-sm select2" id="cboCartera" name="cboCartera" autofocus=""  required>
+                                                        <select class="form-control form-control-sm select2" id="cboCartera" name="cboCartera" onChange="fn_SeleccionaCartera()" autofocus="" required>
                                                             <option value="0">Seleccione Cartera</option>
                                                             <c:forEach items="${av_carteras}" var="av_carteras">
                                                                 <option value="${av_carteras.nId_Cartera}" ${av_carteras.nId_Cartera == idCartera ? 'selected' : ''}>${av_carteras.cCar_Nombre}</option>
@@ -390,7 +450,7 @@
                                                                         %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-danger">
+                                                                            <div class="small-box bg-red-aval">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -398,7 +458,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-danger-aval btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
@@ -408,7 +468,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("SOLICITUD DE FRACCIONAMIENTO")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-warning">
+                                                                            <div class="small-box bg-lead-aval">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -416,7 +476,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-person-add"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-warning btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-warning-aval btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
@@ -425,7 +485,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PROMESA DE PAGO")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-success">
+                                                                            <div class="small-box bg-orange-entel">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -433,17 +493,17 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-stats-bars"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-success-entel btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info 
                                                                                     <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
                                                                             </div>
-                                                                        </div>                                                                                        
+                                                                        </div>
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("SE ENVIO WHATSAPP")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-success">
+                                                                            <div class="small-box bg-orange-entel">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -451,7 +511,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-stats-bars"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-success-entel btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info 
                                                                                     <i class="fas fa-arrow-circle-right"></i>
@@ -461,7 +521,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("INDICA QUE PAGO")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-success">
+                                                                            <div class="small-box bg-orange-entel">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -469,7 +529,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-stats-bars"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-success btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-success-entel btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info 
                                                                                     <i class="fas fa-arrow-circle-right"></i>
@@ -479,7 +539,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO CONTESTA")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-danger">
+                                                                            <div class="small-box bg-red-aval">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
 
@@ -488,7 +548,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-danger-aval btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
@@ -497,7 +557,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("PRESENTARA RECLAMO")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-danger">
+                                                                            <div class="small-box bg-red-aval">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -505,7 +565,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-pie-graph"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-danger btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-danger-aval btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
@@ -514,7 +574,7 @@
                                                                         <% } else if (objConNoCon.getcNombre_OpeCodCliOut().equals("NO GESTIONAR A SOLICITUD DEL CLIENTE")) { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-warning">
+                                                                            <div class="small-box bg-lead-aval">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
                                                                                     <p><%= objConNoCon.getcNombre_OpeCodCliOut() %></p>
@@ -522,7 +582,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-person-add"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-warning btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-warning-aval btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info 
                                                                                     <i class="fas fa-arrow-circle-right"></i>
@@ -532,7 +592,7 @@
                                                                         <% } else { %>
                                                                         <div class="col-lg-3 col-6">
                                                                             <!-- small box -->
-                                                                            <div class="small-box bg-info">
+                                                                            <div class="small-box bg-blue-entel">
                                                                                 <div class="inner">
                                                                                     <h3><%= objConNoCon.getNroContactabilidad() %></h3>
 
@@ -541,7 +601,7 @@
                                                                                 <div class="icon">
                                                                                     <i class="ion ion-bag"></i>
                                                                                 </div>
-                                                                                <button class="btn btn-block btn-info btn-sm" data-toggle="modal" 
+                                                                                <button class="btn btn-block btn-info-entel btn-sm" data-toggle="modal" 
                                                                                         data-target="#modalGestiones" onclick="CargaGestiones('<%= objConNoCon.getnId_OpeCodOut() %>', '<%= objConNoCon.getcNombre_OpeCodCliOut() %>')" 
                                                                                         type="button">Mas Info <i class="fas fa-arrow-circle-right"></i>
                                                                                 </button>
@@ -596,9 +656,9 @@
                                     <tr>
                                         <th class="text-center">Sub Tipo</th>
                                         <th class="text-center">Operador</th>
-                                        <th class="text-center">Inicio</th>
-                                        <th class="text-center">Fin</th>
+                                        <th class="text-center">Duración</th>
                                         <th class="text-center">Documento</th>
+                                        <th class="text-center">Deudor</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyGestionesAll">
