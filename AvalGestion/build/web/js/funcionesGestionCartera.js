@@ -25,6 +25,20 @@ $(document).ready(function () {
     //$('#dtpFechaHasta').val(today);
         
     $('#tablaGestionCarteras').DataTable({
+    
+    dom: "Bfrtip",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        title: "Excel",
+                        text:"Exportar a excel"
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        title: "PDF",
+                        text: "Exportar a PDF"
+                    }
+                ],
     language: {
         "decimal": "",
         "emptyTable": "No hay información",
@@ -48,6 +62,19 @@ $(document).ready(function () {
     }});
 
     $('#tablaGestionDeudores').DataTable({
+    dom: "Bfrtip",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        title: "Excel",
+                        text:"Exportar a excel"
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        title: "PDF",
+                        text: "Exportar a PDF"
+                    }
+                ],
     language: {
         "decimal": "",
         "emptyTable": "No hay información",
@@ -129,30 +156,41 @@ function CargaGestiones(nId_OpeCodOut, cNombre_OpeCodCliOut) {
                     $('#tbodyGestionesAll').html(tabla);
                     
         $('#tablaGestionTipificacion').DataTable({
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
+            dom: "Bfrtip",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        title: "Excel",
+                        text:"Exportar a excel"
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        title: "PDF",
+                        text: "Exportar a PDF"
+                    }
+                ],
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
 
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
             }
-            
-        }
-});
+        });
     });
-    
-    
+       
 }
